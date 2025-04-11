@@ -1,6 +1,6 @@
 {
   "name": "snaprocket",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "description": "A fast, lightweight CLI tool for capturing responsive, full-page screenshots of websites using Puppeteer. Supports multiple viewports and custom configurations to streamline visual testing and automation workflows.",
   "keywords": [

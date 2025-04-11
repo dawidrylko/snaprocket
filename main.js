@@ -7,12 +7,14 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const parseArgs = () => {
   const args = process.argv.slice(2);
   const config = {
     baseUrl: null,
     paths: [],
-    timeout: 1000,
+    timeout: 100,
     output: process.cwd(),
     heightLimit: null,
     customResolutions: [],
@@ -31,7 +33,7 @@ const parseArgs = () => {
       }
       continue;
     } else if (arg === "-t") {
-      config.timeout = parseInt(args[++i], 10) || 1000;
+      config.timeout = parseInt(args[++i], 10) || 100;
     } else if (arg === "-o") {
       config.output = args[++i];
     } else if (arg === "-H") {
@@ -76,6 +78,28 @@ const parseCustomViewport = (str) => {
   return { width, height };
 };
 
+const autoScroll = async (page, sleepDelay) => {
+  let previousHeight = 0;
+  while (true) {
+    const currentHeight = await page.evaluate(() => document.body.scrollHeight);
+
+    for (let pos = previousHeight; pos < currentHeight; pos += 300) {
+      await page.evaluate((scrollPos) => {
+        window.scrollTo(0, scrollPos);
+      }, pos);
+      await sleep(sleepDelay);
+    }
+
+    const newHeight = await page.evaluate(() => document.body.scrollHeight);
+
+    if (newHeight === currentHeight) {
+      break;
+    }
+
+    previousHeight = currentHeight;
+  }
+};
+
 const captureScreenshot = async (browser, fullUrl, viewport, outputFile, heightLimit, timeout) => {
   const page = await browser.newPage();
   if (heightLimit) {
@@ -86,8 +110,10 @@ const captureScreenshot = async (browser, fullUrl, viewport, outputFile, heightL
     await page.setViewport({ width: viewport.width, height: 800 });
   }
   try {
-    await page.goto(fullUrl, { waitUntil: "networkidle2" });
-    await new Promise((resolve) => setTimeout(resolve, timeout));
+    await page.goto(fullUrl, { waitUntil: "networkidle0" });
+    await autoScroll(page, timeout);
+    await sleep(timeout);
+
     const options = { path: outputFile };
     options.fullPage = !heightLimit && !viewport.height;
     await page.screenshot(options);
