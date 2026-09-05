@@ -4,8 +4,6 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
-const __filename = fileURLToPath(import.meta.url);
-
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const parseArgs = (argv = process.argv.slice(2)) => {
@@ -205,9 +203,18 @@ const main = async () => {
   await browser.close();
 };
 
-const isDirectRun = process.argv[1] && path.resolve(process.argv[1]) === __filename;
+const isDirectRun = () => {
+  if (!process.argv[1]) {
+    return false;
+  }
+  try {
+    return fs.realpathSync(process.argv[1]) === fileURLToPath(import.meta.url);
+  } catch {
+    return false;
+  }
+};
 
-if (isDirectRun) {
+if (isDirectRun()) {
   main().catch((err) => {
     logError(err.toString());
     process.exit(1);
