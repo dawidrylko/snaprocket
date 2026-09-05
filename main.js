@@ -5,12 +5,11 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const parseArgs = () => {
-  const args = process.argv.slice(2);
+const parseArgs = (argv = process.argv.slice(2)) => {
+  const args = argv;
   const config = {
     baseUrl: null,
     paths: [],
@@ -51,7 +50,9 @@ const parseArgs = () => {
       }
       continue;
     } else {
+      logError("Unknown option: " + arg);
       i++;
+      continue;
     }
     i++;
   }
@@ -119,6 +120,10 @@ const captureScreenshot = async (browser, fullUrl, viewport, outputFile, heightL
 
     const options = { path: outputFile };
     options.fullPage = !heightLimit && !viewport.height;
+    if (!options.fullPage) {
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await sleep(timeout);
+    }
     await page.screenshot(options);
     logInfo("Screenshot saved: " + outputFile);
   } catch (err) {
@@ -171,7 +176,7 @@ const buildFinalViewports = (config, defaults) => {
         config.customResolutions.forEach((str, idx) => {
           const vp = parseCustomViewport(str);
           if (vp) {
-            finalViewports[`custom_${idx + 1}`] = vp;
+            finalViewports[`custom${idx + 1}`] = vp;
           }
         });
       }
@@ -200,7 +205,23 @@ const main = async () => {
   await browser.close();
 };
 
-main().catch((err) => {
-  logError(err.toString());
-  process.exit(1);
-});
+const isDirectRun = process.argv[1] && path.resolve(process.argv[1]) === __filename;
+
+if (isDirectRun) {
+  main().catch((err) => {
+    logError(err.toString());
+    process.exit(1);
+  });
+}
+
+export {
+  parseArgs,
+  getDefaultViewports,
+  parseCustomViewport,
+  buildFinalViewports,
+  autoScroll,
+  captureScreenshot,
+  createOutputDirectory,
+  processPaths,
+  main,
+};
