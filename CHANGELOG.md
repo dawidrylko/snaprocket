@@ -6,14 +6,22 @@ All notable changes to snaprocket are recorded here. The format follows [Keep a 
 
 ### Added
 
+- Tests, run with `pnpm test` on the Node test runner. They cover argument parsing, viewport selection and the capture sequence, and need no browser.
+- A CI workflow running those tests on every pull request. The release workflow runs them too, before it publishes.
 - This changelog, plus issue templates for bug reports and feature requests.
-- A known limitations section in the README. It covers the fixed-height capture and the viewport selection that silently matches nothing.
+- A known limitations section in the README, for the viewport selection that can silently match nothing.
+
+### Fixed
+
+- A capture with `-H`, or with a `-c` resolution, showed the foot of the page instead of the top. The auto-scroll ran before every shot and never scrolled back, so the viewport sat at the bottom of the document.
+- Custom resolution folders were named `custom_1` and `custom_2` under `-v custom`, but `custom1` and `custom2` without `-v`. They are now `custom1` and `custom2` either way.
+- An unknown option consumed the argument after it. `snaprocket -x -h URL -p /` lost the base URL and then reported it as missing. Unknown options are now named on stderr and skipped.
 
 ### Changed
 
+- Raised the Node.js floor to 24. Puppeteer 25 would still run on 22.12.0, so this is the project's own floor.
 - Rewrote the README around a quickstart and a table of options.
 - Documented the default viewport widths, the output file naming and the folder each custom resolution gets. None of it was written down before.
-- Corrected the description of `-H`. It claimed to capture the top of the page, which is not what the code does.
 - Narrowed the npm keywords and the package description to what the tool actually does.
 - Ignored npm pack output, debug logs and `.DS_Store`.
 

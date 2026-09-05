@@ -9,7 +9,7 @@ Give it a base URL and a list of paths. It drives Chrome through Puppeteer and s
 
 ## Requirements
 
-Node.js 22.12.0 or newer. That floor comes from Puppeteer 25, the only dependency. Installing snaprocket also downloads a Chrome build, which Puppeteer manages for you.
+Node.js 24 or newer. Puppeteer 25, the only dependency, would run on 22.12.0, so this floor is the project's own. Installing snaprocket also downloads a Chrome build, which Puppeteer manages for you.
 
 ## Install
 
@@ -35,7 +35,7 @@ Four paths at four default widths gives sixteen screenshots. They land in `./daw
 | `-p` | one or more paths | required | Paths to capture, space separated. |
 | `-t` | milliseconds | `100` | Pause held after each scroll step, and again before the shot. Raise it for pages that load content lazily. |
 | `-o` | directory | current directory | Where the output tree is written. |
-| `-H` | pixels | whole page | Fix the viewport to this height instead of capturing the whole page. See [known limitations](#known-limitations). |
+| `-H` | pixels | whole page | Capture only the top of the page, down to this height. |
 | `-c`, `--custom` | `WIDTHxHEIGHT`, repeatable | none | Add a viewport at an exact size. |
 | `-a`, `--args` | Chrome flag, repeatable | none | Pass one flag straight to the Chrome process. |
 | `-v` | `s`, `m`, `l`, `xl`, `custom` | all of them | Restrict the run to the named viewports. |
@@ -94,13 +94,20 @@ dawidrylko.com/
 
 Each file is named `<index>.<path>.png`. The index follows the order of `-p`, zero padded to the width of the longest number. The path is slugified, and the root path becomes `home`.
 
-Custom resolutions get one folder each rather than a shared one. The names differ by how the run was started: `custom1` and `custom2` when `-v` is omitted, `custom_1` and `custom_2` when `-v custom` selects them.
+Custom resolutions get one folder each rather than a shared one, named `custom1`, `custom2` and so on in the order the `-c` options were given.
 
 ## Known limitations
 
-snaprocket scrolls every page to the bottom before it shoots, and it never scrolls back up. So a run that fixes the viewport height, with `-H` or with a `-c` resolution, captures the foot of the page rather than the top. Only a whole-page run is unaffected.
+A `-v` value that matches no viewport produces no screenshots, and the run still exits successfully. `-v custom` with no `-c` behaves the same way. In CI, count the files a run wrote rather than trusting its exit status.
 
-A `-v` value that matches no viewport produces no screenshots, and the run still exits successfully. `-v custom` with no `-c` behaves the same way. Check the exit of a CI job by counting the files it wrote, not by its status.
+## Development
+
+```bash
+pnpm install
+pnpm test
+```
+
+The tests use the Node test runner, so there is nothing to install beyond the dependencies. They cover argument parsing, viewport selection and the capture sequence.
 
 ## Releasing
 
