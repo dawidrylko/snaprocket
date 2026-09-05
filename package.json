@@ -2,17 +2,18 @@
   "name": "snaprocket",
   "version": "0.1.0",
   "type": "module",
-  "description": "A fast, lightweight CLI tool for capturing responsive, full-page screenshots of websites using Puppeteer. Supports multiple viewports and custom configurations to streamline visual testing and automation workflows.",
+  "description": "Command line tool that captures full-page screenshots of a website at several viewport widths in one run, using Puppeteer.",
   "keywords": [
     "screenshot",
+    "screenshots",
     "cli",
     "puppeteer",
+    "headless-chrome",
     "viewport",
-    "automation",
-    "webcapture",
-    "visual testing",
-    "fullpage",
-    "responsive"
+    "responsive",
+    "full-page",
+    "visual-testing",
+    "automation"
   ],
   "author": {
     "name": "Dawid Ryłko",
@@ -20,7 +21,8 @@
   },
   "license": "MIT",
   "scripts": {
-    "start": "node main.js"
+    "start": "node main.js",
+    "test": "node --test"
   },
   "repository": {
     "type": "git",
@@ -37,10 +39,11 @@
     "snaprocket": "main.js"
   },
   "files": [
-    "main.js"
+    "main.js",
+    "CHANGELOG.md"
   ],
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=24.0.0"
   },
   "dependencies": {
     "puppeteer": "^25.10.0"

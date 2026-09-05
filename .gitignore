@@ -1,1 +1,11 @@
 /node_modules
+
+# npm pack output
+*.tgz
+
+# Logs
+npm-debug.log*
+pnpm-debug.log*
+
+# macOS
+.DS_Store
