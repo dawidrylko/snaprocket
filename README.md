@@ -126,6 +126,19 @@ After execution, screenshots will be organized in the output directory as shown 
 
 _Note:_ If custom viewports are used, an additional folder (e.g. `custom/`) will be created containing screenshots for each custom resolution.
 
+## 🚢 Releasing
+
+Releases are automated. Pushing a `vX.Y.Z` tag runs `.github/workflows/release.yml`, which verifies the tag against `version` in `package.json`, audits, packs, publishes to npm and creates the GitHub Release.
+
+It uses npm trusted publishing over OIDC, so there is no `NPM_TOKEN` to store or rotate. This needs a one time setup on npmjs.com: in the package settings, add a trusted publisher for `dawidrylko/snaprocket` with the workflow file `release.yml`.
+
+To cut a release:
+
+```bash
+npm version patch   # or minor / major, which commits and tags
+git push --follow-tags
+```
+
 ## 📜 License
 
 This project is licensed under the MIT License – see the [LICENSE](./LICENSE) file for details.

@@ -30,9 +30,15 @@
     "url": "https://github.com/dawidrylko/snaprocket/issues"
   },
   "homepage": "https://github.com/dawidrylko/snaprocket#readme",
-  "bin": {
-    "snaprocket": "./main.js"
+  "publishConfig": {
+    "access": "public"
   },
+  "bin": {
+    "snaprocket": "main.js"
+  },
+  "files": [
+    "main.js"
+  ],
   "engines": {
     "node": ">=22.12.0"
   },
