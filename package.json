@@ -21,7 +21,8 @@
   },
   "license": "MIT",
   "scripts": {
-    "start": "node main.js"
+    "start": "node main.js",
+    "test": "node --test"
   },
   "repository": {
     "type": "git",
@@ -42,7 +43,7 @@
     "CHANGELOG.md"
   ],
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=24.0.0"
   },
   "dependencies": {
     "puppeteer": "^25.10.0"

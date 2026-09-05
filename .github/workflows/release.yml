@@ -52,6 +52,7 @@ jobs:
         env:
           PUPPETEER_SKIP_DOWNLOAD: "true"
 
+      - run: pnpm test
       - run: pnpm audit --audit-level=high
       - run: npm pack --dry-run
 
