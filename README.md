@@ -14,6 +14,8 @@
 
 ## 📥 Installation
 
+Requires **Node.js 22.12.0 or newer**, the floor set by Puppeteer 25.
+
 You can install **Snaprocket** using your favorite package manager: npm, Yarn, or pnpm.
 
 ### Global Installation
@@ -66,14 +68,14 @@ snaprocket -h <baseURL> -p <paths> [-t <timeout>] [-o <output_directory>] [-H <h
 
 ### Command-line Arguments
 
-- **`-h`**: **Base URL** (required) – The starting URL for capturing screenshots.
-- **`-p`**: **Paths** (required) – One or more URL paths to capture. Provide each path as a space-separated list.
-- **`-t`**: **Timeout** – Delay (in milliseconds) held after each auto-scroll step and again before the screenshot is taken (default: `100`). Raise it for pages that load content lazily.
-- **`-o`**: **Output Directory** – Directory where screenshots will be saved. Defaults to the current working directory. Screenshots are organized into sub-folders by domain and viewport.
-- **`-H`**: **Height Limit** – If provided, only captures up to the specified height (in pixels). If omitted, the entire page is captured.
-- **`-c`** or **`--custom`**: **Custom Resolution(s)** – Specify custom resolution(s) in the format `WIDTHxHEIGHT`. This flag can be repeated to add multiple resolutions.
-- **`-a`** or **`--args`**: **Chrome Launch Flag** – Pass a single flag straight to the Chrome process. Repeat the option to pass several. Needed wherever Chrome cannot use its own sandbox, such as inside a container or a CI runner, where launching without `--no-sandbox` crashes on startup.
-- **`-v`**: **Viewports** – Define which viewports to generate. Acceptable values are `s`, `m`, `l`, `xl`, and `custom` (to include all custom resolutions defined with `-c`). If omitted, screenshots are generated for all default viewports and any custom resolutions.
+- **`-h`**: **Base URL** (required) - The starting URL for capturing screenshots.
+- **`-p`**: **Paths** (required) - One or more URL paths to capture. Provide each path as a space-separated list.
+- **`-t`**: **Timeout** - Delay (in milliseconds) held after each auto-scroll step and again before the screenshot is taken (default: `100`). Raise it for pages that load content lazily.
+- **`-o`**: **Output Directory** - Directory where screenshots will be saved. Defaults to the current working directory. Screenshots are organized into sub-folders by domain and viewport.
+- **`-H`**: **Height Limit** - If provided, only captures up to the specified height (in pixels). If omitted, the entire page is captured.
+- **`-c`** or **`--custom`**: **Custom Resolution(s)** - Specify custom resolution(s) in the format `WIDTHxHEIGHT`. This flag can be repeated to add multiple resolutions.
+- **`-a`** or **`--args`**: **Chrome Launch Flag** - Pass a single flag straight to the Chrome process. Repeat the option to pass several. Needed wherever Chrome cannot use its own sandbox, such as inside a container or a CI runner, where launching without `--no-sandbox` crashes on startup.
+- **`-v`**: **Viewports** - Define which viewports to generate. Acceptable values are `s`, `m`, `l`, `xl`, and `custom` (to include all custom resolutions defined with `-c`). If omitted, screenshots are generated for all default viewports and any custom resolutions.
 
 ### Examples
 

@@ -33,6 +33,9 @@
   "bin": {
     "snaprocket": "./main.js"
   },
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "dependencies": {
     "puppeteer": "^25.10.0"
   }
