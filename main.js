@@ -19,6 +19,7 @@ const parseArgs = () => {
     heightLimit: null,
     customResolutions: [],
     viewports: [],
+    launchArgs: [],
   };
   let i = 0;
   while (i < args.length) {
@@ -40,6 +41,8 @@ const parseArgs = () => {
       config.heightLimit = parseInt(args[++i], 10);
     } else if (arg === "-c" || arg === "--custom") {
       config.customResolutions.push(args[++i]);
+    } else if (arg === "-a" || arg === "--args") {
+      config.launchArgs.push(args[++i]);
     } else if (arg === "-v") {
       i++;
       while (i < args.length && !args[i].startsWith("-")) {
@@ -189,7 +192,7 @@ const buildFinalViewports = (config, defaults) => {
 
 const main = async () => {
   const config = parseArgs();
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({ args: config.launchArgs });
   const defaults = getDefaultViewports();
   const finalViewports = buildFinalViewports(config, defaults);
   const outputBase = createOutputDirectory(config.baseUrl, config.output);
