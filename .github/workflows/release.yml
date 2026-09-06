@@ -21,12 +21,9 @@ jobs:
 
       - uses: actions/setup-node@v7
         with:
-          node-version: 24
+          node-version: 26
           registry-url: https://registry.npmjs.org
           package-manager-cache: false
-
-      - name: Use an npm version with Trusted Publishing support
-        run: npm install --global npm@11.18.0
 
       - name: Verify tag matches package version
         env:
@@ -52,7 +49,14 @@ jobs:
         env:
           PUPPETEER_SKIP_DOWNLOAD: "true"
 
-      - run: pnpm test
+      - name: Run the tests, and fail a run that discovered none
+        run: |
+          set -o pipefail
+          pnpm test --test-reporter=tap | tee "$RUNNER_TEMP/tests.tap"
+          grep -qE '^# tests [1-9][0-9]*$' "$RUNNER_TEMP/tests.tap" || {
+            echo "The runner reported no tests. A run that checked nothing is not a pass."
+            exit 1
+          }
       - run: pnpm audit --audit-level=high
       - run: npm pack --dry-run
 

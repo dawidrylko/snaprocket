@@ -8,6 +8,7 @@ All notable changes to snaprocket are recorded here. The format follows [Keep a 
 
 - Tests, run with `pnpm test` on the Node test runner. They cover argument parsing, viewport selection and the capture sequence, and need no browser.
 - A CI workflow running those tests on every pull request. The release workflow runs them too, before it publishes.
+- Both test steps now fail a run that discovered no tests. `node --test` exits 0 when it finds none, so a commit that moved or deleted the suite would have gone green on an empty run.
 - This changelog, plus issue templates for bug reports and feature requests.
 - A known limitations section in the README, for the viewport selection that can silently match nothing.
 
@@ -19,7 +20,8 @@ All notable changes to snaprocket are recorded here. The format follows [Keep a 
 
 ### Changed
 
-- Raised the Node.js floor to 24. Puppeteer 25 would still run on 22.12.0, so this is the project's own floor.
+- Raised the Node.js floor to the Node 26 line, with development and CI on 26.8.1. Puppeteer 25 would still run on 22.12.0, so this is the project's own floor.
+- Dropped the npm pin from the release workflow. Node 26 ships npm 11.19.0, which is newer than the pinned 11.18.0 and already supports trusted publishing.
 - Rewrote the README around a quickstart and a table of options.
 - Documented the default viewport widths, the output file naming and the folder each custom resolution gets. None of it was written down before.
 - Narrowed the npm keywords and the package description to what the tool actually does.

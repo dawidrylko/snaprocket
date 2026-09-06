@@ -9,7 +9,7 @@ Give it a base URL and a list of paths. It drives Chrome through Puppeteer and s
 
 ## Requirements
 
-Node.js 24 or newer. Puppeteer 25, the only dependency, would run on 22.12.0, so this floor is the project's own. Installing snaprocket also downloads a Chrome build, which Puppeteer manages for you.
+Node.js 26 or newer. Puppeteer 25, the only dependency, would run on 22.12.0, so this floor is the project's own. Development and CI run 26.8.1. Installing snaprocket also downloads a Chrome build, which Puppeteer manages for you.
 
 ## Install
 
