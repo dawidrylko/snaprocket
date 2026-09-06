@@ -2,7 +2,7 @@
 
 All notable changes to snaprocket are recorded here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.2.0] - 2026-09-06
 
 ### Added
 
@@ -50,7 +50,8 @@ All notable changes to snaprocket are recorded here. The format follows [Keep a 
 
 - First release. Full-page screenshots at four default viewport widths and at custom resolutions, with a height limit, a configurable pause and a chosen output directory.
 
-[Unreleased]: https://github.com/dawidrylko/snaprocket/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/dawidrylko/snaprocket/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/dawidrylko/snaprocket/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/dawidrylko/snaprocket/compare/0.0.2...v0.1.0
 [0.0.2]: https://github.com/dawidrylko/snaprocket/compare/0.0.1...0.0.2
 [0.0.1]: https://github.com/dawidrylko/snaprocket/releases/tag/0.0.1

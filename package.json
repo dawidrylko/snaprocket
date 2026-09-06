@@ -1,6 +1,6 @@
 {
   "name": "snaprocket",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "description": "Command line tool that captures full-page screenshots of a website at several viewport widths in one run, using Puppeteer.",
   "keywords": [
