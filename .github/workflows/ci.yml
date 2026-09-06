@@ -29,4 +29,11 @@ jobs:
         env:
           PUPPETEER_SKIP_DOWNLOAD: "true"
 
-      - run: pnpm test
+      - name: Run the tests, and fail a run that discovered none
+        run: |
+          set -o pipefail
+          pnpm test --test-reporter=tap | tee "$RUNNER_TEMP/tests.tap"
+          grep -qE '^# tests [1-9][0-9]*$' "$RUNNER_TEMP/tests.tap" || {
+            echo "The runner reported no tests. A run that checked nothing is not a pass."
+            exit 1
+          }
